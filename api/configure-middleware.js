@@ -1,12 +1,14 @@
 const express = require('express');
 
+const helmet = require('helmet')
+
 const session = require('express-session')
 
 const sessionConfig = {
     name: 'herm',
     secret: 'its a secret',
     cookie: {
-        maxAge: 1000 * 60,
+        maxAge: 1000 * 10,
         secure: false,
         httpOnly: true,
     },
@@ -17,6 +19,7 @@ const sessionConfig = {
 module.exports = server => {
 
     server.use(express.json());
+    server.use(helmet())
     server.use(session(sessionConfig))
     
   };
