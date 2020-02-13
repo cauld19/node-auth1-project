@@ -2,12 +2,34 @@ const db = require('../database/db-config');
 
 
 module.exports = {
-    // add,
+    add,
     find,
-    // findBy,
-    // findById,
+    findBy,
+    findById,
   };
   
   function find() {
-    return db('users').select('id', 'username');
+    return db('users')
+    .select('id', 'username');
   }
+
+  function findBy(search) {
+      return db('users')
+        .select('id', 'username', 'password')
+        .where(search)
+  }
+
+  function findById(id) {
+    return db('users')
+      .where({ id })
+      .first();
+  }
+
+ 
+function add(user) {
+    return db('users')
+        .insert(user)
+        .then(ids => {
+            return findById(ids[0]);
+          });
+}
