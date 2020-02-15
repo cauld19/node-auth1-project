@@ -3,11 +3,12 @@ const router = require('express').Router();
 // const bcrypt = require('bcryptjs')
 
 const Users = require('../users/users-model.js')
+const restricted = require('../auth/restricted-middleware');
 
 
 
 
-router.get('/', auth, (req,res) => {
+router.get('/', restricted, (req,res) => {
     
     Users.find()
         .then(users => {
@@ -18,13 +19,6 @@ router.get('/', auth, (req,res) => {
         })
 })
 
-function auth(req, res, next) {
 
-            if (req.session && req.session.user) {
-                next()
-            } else {
-                res.status(401).json({message: "Not authorized"})
-            }
-}
 
 module.exports = router;

@@ -38,4 +38,14 @@ router.post('/login', (req,res) => {
         })
 })
 
+router.get('/logout', (req, res) => {
+    if(req.session.user) {
+        req.destroy(err => {
+            res.send('log out failed')
+        })
+    } else {
+        res.send('log out successs')
+    }
+})
+
 module.exports = router;
